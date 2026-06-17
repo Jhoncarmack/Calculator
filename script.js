@@ -12,7 +12,11 @@ for (let i = 0; i < 20; i++) {
    miniBtn.style.height = `calc(100% / 5)`;
 
    buttons.appendChild(miniBtn);
-
+   miniBtn.addEventListener("click", () => {
+      firstNumber = miniBtn.textContent;
+      display.textContent = firstNumber;
+      console.log(firstNumber);
+   });
    if (a <= 9) {
       miniBtn.textContent = a;
       miniBtn.classList.add("number");
@@ -25,6 +29,7 @@ for (let i = 0; i < 20; i++) {
 
    a++;
 }
+
 display.textContent = 0;
 
 let firstNumber;
