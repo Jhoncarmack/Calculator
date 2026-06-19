@@ -1,40 +1,83 @@
 const box = document.querySelector(".box");
 const buttons = document.querySelector(".buttons");
 const display = document.querySelector(".display");
+
 let a = 0;
+let opr;
+let firstNumber;
+let secondNumber;
 let val = 0;
-const value = ["+", "-", "*", "/", "C"];
+let keepAppending = true;
+const value = ["+", "-", "*", "/", "C", "="];
+
 for (let i = 0; i < 20; i++) {
    const miniBtn = document.createElement("div");
+
    miniBtn.classList.add("miniButtons");
 
    miniBtn.style.width = `calc(100% / 4)`;
    miniBtn.style.height = `calc(100% / 5)`;
 
    buttons.appendChild(miniBtn);
+
    miniBtn.addEventListener("click", () => {
-      firstNumber = miniBtn.textContent;
-      display.textContent = firstNumber;
-      console.log(firstNumber);
+      if (miniBtn.classList.contains("number")) {
+         if (keepAppending) {
+            display.textContent += miniBtn.textContent;
+         } else {
+            display.textContent = miniBtn.textContent;
+            keepAppending = true;
+         }
+      }
+      if (miniBtn.classList.contains("operator")) {
+         keepAppending = false;
+         firstNumber = display.textContent;
+         opr = miniBtn.textContent;
+      }
+
+      if (miniBtn.classList.contains("equal")) {
+         secondNumber = display.textContent;
+
+         display.textContent = operate(
+            Number(firstNumber),
+            opr,
+            Number(secondNumber),
+         );
+      }
+      if (miniBtn.classList.contains("cancel")) {
+         firstNumber = 0;
+         secondNumber = 0;
+         display.textContent = "";
+      }
    });
    if (a <= 9) {
       miniBtn.textContent = a;
       miniBtn.classList.add("number");
-   } else {
-      miniBtn.textContent = value[val];
+   } else if (
+      value[val] === "+" ||
+      value[val] === "-" ||
+      value[val] === "*" ||
+      value[val] === "/"
+   ) {
       miniBtn.classList.add("operator");
+      miniBtn.textContent = value[val];
       val++;
-      //clear에대해서는 나중에 클래스로 추가
+   } else if (value[val] === "C") {
+      miniBtn.classList.add("cancel");
+      miniBtn.textContent = value[val];
+
+      val++;
+   } else if (value[val] === "=") {
+      miniBtn.classList.add("equal");
+      miniBtn.textContent = value[val];
+
+      val++;
+   } else {
    }
 
    a++;
 }
 
-display.textContent = 0;
-
-let firstNumber;
-let secondNumber;
-let operator;
 function add(firstOne, nextOne) {
    let result = firstOne + nextOne;
    return result;
