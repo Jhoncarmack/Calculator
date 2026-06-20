@@ -4,12 +4,12 @@ const display = document.querySelector(".display");
 
 let a = 0;
 let opr;
-let firstNumber;
-let secondNumber;
+let firstNumber = "";
+let secondNumber = "";
 let val = 0;
 let keepAppending = true;
 let isFirstOperator = true;
-let justCalculated;
+let justCalculated = false;
 const value = ["+", "-", "*", "/", "C", "="];
 
 for (let i = 0; i < 20; i++) {
@@ -72,9 +72,13 @@ for (let i = 0; i < 20; i++) {
       }
 
       if (miniBtn.classList.contains("cancel")) {
-         firstNumber = 0;
-         secondNumber = 0;
+         firstNumber = "";
+         secondNumber = "";
          display.textContent = "";
+         opr = "";
+         isFirstOperator = true;
+         keepAppending = true;
+         justCalculated = false;
       }
    });
    if (a <= 9) {
