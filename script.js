@@ -9,7 +9,7 @@ let secondNumber;
 let val = 0;
 let keepAppending = true;
 let isFirstOperator = true;
-let too;
+let justCalculated;
 const value = ["+", "-", "*", "/", "C", "="];
 
 for (let i = 0; i < 20; i++) {
@@ -27,20 +27,17 @@ for (let i = 0; i < 20; i++) {
          if (keepAppending) {
             display.textContent += miniBtn.textContent;
          } else {
-            if (too) {
-               display.textContent = miniBtn.textContent;
+            display.textContent = miniBtn.textContent;
 
-               keepAppending = true;
+            keepAppending = true;
+            isFirstOperator = false;
+            if (justCalculated) {
                isFirstOperator = true;
-               too = false;
-            } else {
-               display.textContent = miniBtn.textContent;
-
-               keepAppending = true;
-               isFirstOperator = false;
+               justCalculated = false;
             }
          }
       }
+
       if (miniBtn.classList.contains("operator")) {
          if (isFirstOperator) {
             keepAppending = false;
@@ -64,7 +61,7 @@ for (let i = 0; i < 20; i++) {
       if (miniBtn.classList.contains("equal")) {
          isFirstOperator = true;
          keepAppending = false;
-         too = true;
+         justCalculated = true;
          secondNumber = display.textContent;
 
          display.textContent = operate(
