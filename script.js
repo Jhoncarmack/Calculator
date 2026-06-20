@@ -8,6 +8,8 @@ let firstNumber;
 let secondNumber;
 let val = 0;
 let keepAppending = true;
+let isFirstOperator = true;
+let too;
 const value = ["+", "-", "*", "/", "C", "="];
 
 for (let i = 0; i < 20; i++) {
@@ -25,17 +27,44 @@ for (let i = 0; i < 20; i++) {
          if (keepAppending) {
             display.textContent += miniBtn.textContent;
          } else {
-            display.textContent = miniBtn.textContent;
-            keepAppending = true;
+            if (too) {
+               display.textContent = miniBtn.textContent;
+
+               keepAppending = true;
+               isFirstOperator = true;
+               too = false;
+            } else {
+               display.textContent = miniBtn.textContent;
+
+               keepAppending = true;
+               isFirstOperator = false;
+            }
          }
       }
       if (miniBtn.classList.contains("operator")) {
-         keepAppending = false;
-         firstNumber = display.textContent;
-         opr = miniBtn.textContent;
+         if (isFirstOperator) {
+            keepAppending = false;
+            firstNumber = display.textContent;
+            opr = miniBtn.textContent;
+         } else {
+            secondNumber = display.textContent;
+
+            display.textContent = operate(
+               Number(firstNumber),
+               opr,
+               Number(secondNumber),
+            );
+            firstNumber = display.textContent;
+            opr = miniBtn.textContent;
+            keepAppending = false;
+            isFirstOperator = true;
+         }
       }
 
       if (miniBtn.classList.contains("equal")) {
+         isFirstOperator = true;
+         keepAppending = false;
+         too = true;
          secondNumber = display.textContent;
 
          display.textContent = operate(
@@ -44,6 +73,7 @@ for (let i = 0; i < 20; i++) {
             Number(secondNumber),
          );
       }
+
       if (miniBtn.classList.contains("cancel")) {
          firstNumber = 0;
          secondNumber = 0;
