@@ -34,47 +34,28 @@ for (let i = 0; i < 20; i++) {
          justCalculated = false;
          isWorking = true;
       }
-      if (isWorking) {
-         if (miniBtn.classList.contains("number")) {
-            if (keepAppending) {
-               display.textContent += miniBtn.textContent;
-            } else {
-               display.textContent = miniBtn.textContent;
+      if (!isWorking) return;
+      if (miniBtn.classList.contains("number")) {
+         if (keepAppending) {
+            display.textContent += miniBtn.textContent;
+         } else {
+            display.textContent = miniBtn.textContent;
 
-               keepAppending = true;
-               isFirstOperator = false;
-               if (justCalculated) {
-                  isFirstOperator = true;
-                  justCalculated = false;
-               }
-            }
-         }
-
-         if (miniBtn.classList.contains("operator")) {
-            if (isFirstOperator) {
-               keepAppending = false;
-               firstNumber = display.textContent;
-               opr = miniBtn.textContent;
-            } else {
-               secondNumber = display.textContent;
-
-               display.textContent = operate(
-                  Number(firstNumber),
-                  opr,
-                  Number(secondNumber),
-               );
-
-               firstNumber = display.textContent;
-               opr = miniBtn.textContent;
-               keepAppending = false;
+            keepAppending = true;
+            isFirstOperator = false;
+            if (justCalculated) {
                isFirstOperator = true;
+               justCalculated = false;
             }
          }
+      }
 
-         if (miniBtn.classList.contains("equal")) {
-            isFirstOperator = true;
+      if (miniBtn.classList.contains("operator")) {
+         if (isFirstOperator) {
             keepAppending = false;
-            justCalculated = true;
+            firstNumber = display.textContent;
+            opr = miniBtn.textContent;
+         } else {
             secondNumber = display.textContent;
 
             display.textContent = operate(
@@ -82,7 +63,25 @@ for (let i = 0; i < 20; i++) {
                opr,
                Number(secondNumber),
             );
+
+            firstNumber = display.textContent;
+            opr = miniBtn.textContent;
+            keepAppending = false;
+            isFirstOperator = true;
          }
+      }
+
+      if (miniBtn.classList.contains("equal")) {
+         isFirstOperator = true;
+         keepAppending = false;
+         justCalculated = true;
+         secondNumber = display.textContent;
+
+         display.textContent = operate(
+            Number(firstNumber),
+            opr,
+            Number(secondNumber),
+         );
       }
    });
    if (a <= 9) {
