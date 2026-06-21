@@ -10,7 +10,7 @@ let val = 0;
 let keepAppending = true;
 let isFirstOperator = true;
 let justCalculated = false;
-const value = ["+", "-", "*", "/", "C", "="];
+const value = [".", "+", "-", "*", "/", "C", "="];
 
 for (let i = 0; i < 20; i++) {
    const miniBtn = document.createElement("div");
@@ -51,6 +51,7 @@ for (let i = 0; i < 20; i++) {
                opr,
                Number(secondNumber),
             );
+
             firstNumber = display.textContent;
             opr = miniBtn.textContent;
             keepAppending = false;
@@ -84,6 +85,10 @@ for (let i = 0; i < 20; i++) {
    if (a <= 9) {
       miniBtn.textContent = a;
       miniBtn.classList.add("number");
+   } else if (value[val] === ".") {
+      miniBtn.classList.add("dot");
+      miniBtn.textContent = value[val];
+      val++;
    } else if (
       value[val] === "+" ||
       value[val] === "-" ||
@@ -111,19 +116,19 @@ for (let i = 0; i < 20; i++) {
 
 function add(firstOne, nextOne) {
    let result = firstOne + nextOne;
-   return result;
+   return round(result);
 }
 function subtract(firstOne, nextOne) {
    let result = firstOne - nextOne;
-   return result;
+   return round(result);
 }
 function multiply(firstOne, nextOne) {
    let result = firstOne * nextOne;
-   return result;
+   return round(result);
 }
 function divide(firstOne, nextOne) {
    let result = firstOne / nextOne;
-   return result;
+   return round(result);
 }
 
 function operate(firstNum, op, secondNum) {
@@ -136,4 +141,7 @@ function operate(firstNum, op, secondNum) {
    } else {
       return divide(firstNum, secondNum);
    }
+}
+function round(result) {
+   return Number(result.toFixed(11));
 }
