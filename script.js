@@ -10,6 +10,7 @@ let val = 0;
 let keepAppending = true;
 let isFirstOperator = true;
 let justCalculated = false;
+let isWorking = true;
 const value = [".", "+", "-", "*", "/", "C", "="];
 
 for (let i = 0; i < 20; i++) {
@@ -23,55 +24,6 @@ for (let i = 0; i < 20; i++) {
    buttons.appendChild(miniBtn);
 
    miniBtn.addEventListener("click", () => {
-      if (miniBtn.classList.contains("number")) {
-         if (keepAppending) {
-            display.textContent += miniBtn.textContent;
-         } else {
-            display.textContent = miniBtn.textContent;
-
-            keepAppending = true;
-            isFirstOperator = false;
-            if (justCalculated) {
-               isFirstOperator = true;
-               justCalculated = false;
-            }
-         }
-      }
-
-      if (miniBtn.classList.contains("operator")) {
-         if (isFirstOperator) {
-            keepAppending = false;
-            firstNumber = display.textContent;
-            opr = miniBtn.textContent;
-         } else {
-            secondNumber = display.textContent;
-
-            display.textContent = operate(
-               Number(firstNumber),
-               opr,
-               Number(secondNumber),
-            );
-
-            firstNumber = display.textContent;
-            opr = miniBtn.textContent;
-            keepAppending = false;
-            isFirstOperator = true;
-         }
-      }
-
-      if (miniBtn.classList.contains("equal")) {
-         isFirstOperator = true;
-         keepAppending = false;
-         justCalculated = true;
-         secondNumber = display.textContent;
-
-         display.textContent = operate(
-            Number(firstNumber),
-            opr,
-            Number(secondNumber),
-         );
-      }
-
       if (miniBtn.classList.contains("cancel")) {
          firstNumber = "";
          secondNumber = "";
@@ -80,6 +32,57 @@ for (let i = 0; i < 20; i++) {
          isFirstOperator = true;
          keepAppending = true;
          justCalculated = false;
+         isWorking = true;
+      }
+      if (isWorking) {
+         if (miniBtn.classList.contains("number")) {
+            if (keepAppending) {
+               display.textContent += miniBtn.textContent;
+            } else {
+               display.textContent = miniBtn.textContent;
+
+               keepAppending = true;
+               isFirstOperator = false;
+               if (justCalculated) {
+                  isFirstOperator = true;
+                  justCalculated = false;
+               }
+            }
+         }
+
+         if (miniBtn.classList.contains("operator")) {
+            if (isFirstOperator) {
+               keepAppending = false;
+               firstNumber = display.textContent;
+               opr = miniBtn.textContent;
+            } else {
+               secondNumber = display.textContent;
+
+               display.textContent = operate(
+                  Number(firstNumber),
+                  opr,
+                  Number(secondNumber),
+               );
+
+               firstNumber = display.textContent;
+               opr = miniBtn.textContent;
+               keepAppending = false;
+               isFirstOperator = true;
+            }
+         }
+
+         if (miniBtn.classList.contains("equal")) {
+            isFirstOperator = true;
+            keepAppending = false;
+            justCalculated = true;
+            secondNumber = display.textContent;
+
+            display.textContent = operate(
+               Number(firstNumber),
+               opr,
+               Number(secondNumber),
+            );
+         }
       }
    });
    if (a <= 9) {
@@ -132,7 +135,10 @@ function divide(firstOne, nextOne) {
 }
 
 function operate(firstNum, op, secondNum) {
-   if (op === "+") {
+   if (secondNum === 0 && op === "/") {
+      isWorking = false;
+      return "No n / 0 => Fail";
+   } else if (op === "+") {
       return add(firstNum, secondNum);
    } else if (op === "-") {
       return subtract(firstNum, secondNum);
