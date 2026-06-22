@@ -11,6 +11,7 @@ let keepAppending = true;
 let isFirstOperator = true;
 let justCalculated = false;
 let isWorking = true;
+
 const value = [".", "+", "-", "*", "/", "C", "="];
 
 for (let i = 0; i < 20; i++) {
@@ -53,7 +54,9 @@ for (let i = 0; i < 20; i++) {
       if (miniBtn.classList.contains("operator")) {
          if (isFirstOperator) {
             keepAppending = false;
+
             firstNumber = display.textContent;
+
             opr = miniBtn.textContent;
          } else {
             secondNumber = display.textContent;
@@ -72,11 +75,11 @@ for (let i = 0; i < 20; i++) {
       }
 
       if (miniBtn.classList.contains("equal")) {
+         if (!opr) return;
          isFirstOperator = true;
          keepAppending = false;
          justCalculated = true;
          secondNumber = display.textContent;
-
          display.textContent = operate(
             Number(firstNumber),
             opr,
