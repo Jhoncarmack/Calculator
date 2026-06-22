@@ -76,10 +76,13 @@ for (let i = 0; i < 20; i++) {
 
       if (miniBtn.classList.contains("equal")) {
          if (!opr) return;
+         if (!keepAppending) return;
          isFirstOperator = true;
          keepAppending = false;
          justCalculated = true;
+
          secondNumber = display.textContent;
+
          display.textContent = operate(
             Number(firstNumber),
             opr,
