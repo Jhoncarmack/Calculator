@@ -12,7 +12,7 @@ let isFirstOperator = true;
 let justCalculated = false;
 let isWorking = true;
 
-const value = [".", "+", "-", "*", "/", "C", "="];
+const value = [".", "+", "-", "*", "/", "C", "=", "CE"];
 
 for (let i = 0; i < 20; i++) {
    const miniBtn = document.createElement("div");
@@ -103,7 +103,13 @@ for (let i = 0; i < 20; i++) {
             Number(secondNumber),
          );
       }
+      if (miniBtn.classList.contains("CE")) {
+         if (display.textContent.length > 0) {
+            display.textContent = display.textContent.slice(0, -1);
+         }
+      }
    });
+
    if (a <= 9) {
       miniBtn.textContent = a;
       miniBtn.classList.add("number");
@@ -129,6 +135,10 @@ for (let i = 0; i < 20; i++) {
       miniBtn.classList.add("equal");
       miniBtn.textContent = value[val];
 
+      val++;
+   } else if (value[val] === "CE") {
+      miniBtn.classList.add("CE");
+      miniBtn.textContent = value[val];
       val++;
    } else {
    }
