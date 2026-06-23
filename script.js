@@ -38,9 +38,23 @@ for (let i = 0; i < 20; i++) {
       if (!isWorking) return;
       if (miniBtn.classList.contains("number")) {
          if (keepAppending) {
+            if (display.textContent === "" && miniBtn.textContent === ".") {
+               display.textContent = "0" + miniBtn.textContent;
+               return;
+            }
+            if (
+               miniBtn.textContent === "." &&
+               display.textContent.includes(".")
+            )
+               return;
+
             display.textContent += miniBtn.textContent;
          } else {
-            display.textContent = miniBtn.textContent;
+            if (miniBtn.textContent === ".") {
+               display.textContent = "0" + miniBtn.textContent;
+            } else {
+               display.textContent = miniBtn.textContent;
+            }
 
             keepAppending = true;
             isFirstOperator = false;
@@ -94,7 +108,7 @@ for (let i = 0; i < 20; i++) {
       miniBtn.textContent = a;
       miniBtn.classList.add("number");
    } else if (value[val] === ".") {
-      miniBtn.classList.add("dot");
+      miniBtn.classList.add("number");
       miniBtn.textContent = value[val];
       val++;
    } else if (
