@@ -145,6 +145,20 @@ for (let i = 0; i < 20; i++) {
 
    a++;
 }
+document.addEventListener("keydown", (event) => {
+   let key = event.key;
+   const allButtons = Array.from(buttons.querySelectorAll("div"));
+   if (key === "Enter") key = "=";
+   if (key === "Backspace") key = "CE";
+   if (key === "Escape") key = "C";
+   const matchedButton = allButtons.find((item) => {
+      return item.textContent === key;
+   });
+
+   if (matchedButton) {
+      matchedButton.click();
+   }
+});
 
 function add(firstOne, nextOne) {
    let result = firstOne + nextOne;
