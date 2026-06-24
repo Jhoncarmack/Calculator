@@ -25,6 +25,11 @@ for (let i = 0; i < 20; i++) {
    buttons.appendChild(miniBtn);
 
    miniBtn.addEventListener("click", () => {
+      miniBtn.classList.add("is-pressed");
+
+      setTimeout(() => {
+         miniBtn.classList.remove("is-pressed");
+      }, 100);
       if (miniBtn.classList.contains("cancel")) {
          firstNumber = "";
          secondNumber = "";
