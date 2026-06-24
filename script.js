@@ -7,6 +7,7 @@ let opr;
 let firstNumber = "";
 let secondNumber = "";
 let val = 0;
+
 let keepAppending = true;
 let isFirstOperator = true;
 let justCalculated = false;
@@ -146,6 +147,7 @@ for (let i = 0; i < 20; i++) {
       miniBtn.textContent = value[val];
       val++;
    } else {
+      miniBtn.textContent = "🔥";
    }
 
    a++;
